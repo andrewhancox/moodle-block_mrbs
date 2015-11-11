@@ -45,43 +45,40 @@ $options = array(0 => get_string('no'), 1=> get_string('yes'));
 $settings->add(new admin_setting_configselect('enable_periods', get_string('config_enable_periods', 'block_mrbs'),get_string('config_enable_periods2', 'block_mrbs'), 1, $options));
 $settings->settings->enable_periods->plugin='block/mrbs';
 
-if (isset($cfg_mrbs->enable_periods)) {
-    if($cfg_mrbs->enable_periods ==0) {
+if (isset($cfg_mrbs->enable_periods) && $cfg_mrbs->enable_periods ==0) {
+    // Resolution
 
-        // Resolution
+    unset($options);
+    $strunits = get_string('resolution_units', 'block_mrbs');
+    $options = array('900' => '15' .$strunits , '1800'=> '30' . $strunits, '2700'=> '45' . $strunits, '3600'=> '60' . $strunits, '4500'=> '75' . $strunits, '5400'=> '90' . $strunits, '6300'=> '105' . $strunits, '7200'=> '120' . $strunits);
+    $settings->add(new admin_setting_configselect('resolution', get_string('config_resolution', 'block_mrbs'),get_string('config_resolution2', 'block_mrbs'), '1800', $options));
+    $settings->settings->resolution->plugin='block/mrbs';
 
-        unset($options);
-        $strunits = get_string('resolution_units', 'block_mrbs');
-        $options = array('900' => '15' .$strunits , '1800'=> '30' . $strunits, '2700'=> '45' . $strunits, '3600'=> '60' . $strunits, '4500'=> '75' . $strunits, '5400'=> '90' . $strunits, '6300'=> '105' . $strunits, '7200'=> '120' . $strunits);
-        $settings->add(new admin_setting_configselect('resolution', get_string('config_resolution', 'block_mrbs'),get_string('config_resolution2', 'block_mrbs'), '1800', $options));
-        $settings->settings->resolution->plugin='block/mrbs';
+    // Start Time (Hours)
+    unset($options);
+    $options = array(1 => '01', 2=> '02', 3=> '03', 4=> '04', 5=> '05', 6=> '06', 7=> '07', 8=> '08', 9=> '09', 10=> '10', 11=> '11', 12=> '12', 13=> '13', 14=> '14', 15=> '15', 16=> '16', 17=> '17', 18=> '18', 19=> '19', 20=> '20', 21=> '21', 22=> '22', 23=> '23');
+    $settings->add(new admin_setting_configselect('morningstarts', get_string('config_morningstarts', 'block_mrbs'),get_string('config_morningstarts2', 'block_mrbs'), 7, $options));
+    $settings->settings->morningstarts->plugin='block/mrbs';
 
-        // Start Time (Hours)
-        unset($options);
-        $options = array(1 => '01', 2=> '02', 3=> '03', 4=> '04', 5=> '05', 6=> '06', 7=> '07', 8=> '08', 9=> '09', 10=> '10', 11=> '11', 12=> '12', 13=> '13', 14=> '14', 15=> '15', 16=> '16', 17=> '17', 18=> '18', 19=> '19', 20=> '20', 21=> '21', 22=> '22', 23=> '23');
-        $settings->add(new admin_setting_configselect('morningstarts', get_string('config_morningstarts', 'block_mrbs'),get_string('config_morningstarts2', 'block_mrbs'), 7, $options));
-        $settings->settings->morningstarts->plugin='block/mrbs';
+    // Start Time (Min)
+    unset($options);
+    $options = array(0 => '00', 5=> '05', 10=> '10', 15=> '15', 20=> '20', 25=> '25', 30=> '30', 35=> '35', 40=> '40', 45=> '45', 50=> '50', 55=> '55');
+    $settings->add(new admin_setting_configselect('morningstarts_min', get_string('config_morningstarts_min', 'block_mrbs'),get_string('config_morningstarts_min2', 'block_mrbs'), 0, $options));
+    $settings->settings->morningstarts_min->plugin='block/mrbs';
+    // End Time (Hours)
+    unset($options);
+    $options = array(1 => '01', 2=> '02', 3=> '03', 4=> '04', 5=> '05', 6=> '06', 7=> '07', 8=> '08', 9=> '09', 10=> '10', 11=> '11', 12=> '12', 13=> '13', 14=> '14', 15=> '15', 16=> '16', 17=> '17', 18=> '18', 19=> '19', 20=> '20', 21=> '21', 22=> '22', 23=> '23'     );
+    $settings->add(new admin_setting_configselect('eveningends', get_string('config_eveningends', 'block_mrbs'),get_string('config_eveningends2', 'block_mrbs'), 19, $options));
+    $settings->settings->eveningends->plugin='block/mrbs';
+    // End Time Time (Min)
+    unset($options);
+    $options = array(0 => '00', 5=> '05', 10=> '10', 15=> '15', 20=> '20', 25=> '25', 30=> '30', 35=> '35', 40=> '40', 45=> '45', 50=> '50', 55=> '55');
+    $settings->add(new admin_setting_configselect('eveningends_min', get_string('config_eveningends_min', 'block_mrbs'),get_string('config_eveningends_min2', 'block_mrbs'), 0, $options));
+    $settings->settings->eveningends_min->plugin='block/mrbs';
+} else {  //Use Custom Periods
 
-        // Start Time (Min)
-        unset($options);
-        $options = array(0 => '00', 5=> '05', 10=> '10', 15=> '15', 20=> '20', 25=> '25', 30=> '30', 35=> '35', 40=> '40', 45=> '45', 50=> '50', 55=> '55');
-        $settings->add(new admin_setting_configselect('morningstarts_min', get_string('config_morningstarts_min', 'block_mrbs'),get_string('config_morningstarts_min2', 'block_mrbs'), 0, $options));
-        $settings->settings->morningstarts_min->plugin='block/mrbs';
-        // End Time (Hours)
-        unset($options);
-        $options = array(1 => '01', 2=> '02', 3=> '03', 4=> '04', 5=> '05', 6=> '06', 7=> '07', 8=> '08', 9=> '09', 10=> '10', 11=> '11', 12=> '12', 13=> '13', 14=> '14', 15=> '15', 16=> '16', 17=> '17', 18=> '18', 19=> '19', 20=> '20', 21=> '21', 22=> '22', 23=> '23'     );
-        $settings->add(new admin_setting_configselect('eveningends', get_string('config_eveningends', 'block_mrbs'),get_string('config_eveningends2', 'block_mrbs'), 19, $options));
-        $settings->settings->eveningends->plugin='block/mrbs';
-        // End Time Time (Min)
-        unset($options);
-        $options = array(0 => '00', 5=> '05', 10=> '10', 15=> '15', 20=> '20', 25=> '25', 30=> '30', 35=> '35', 40=> '40', 45=> '45', 50=> '50', 55=> '55');
-        $settings->add(new admin_setting_configselect('eveningends_min', get_string('config_eveningends_min', 'block_mrbs'),get_string('config_eveningends_min2', 'block_mrbs'), 0, $options));
-        $settings->settings->eveningends_min->plugin='block/mrbs';
-    } else {  //Use Custom Periods
-
-        $settings->add(new admin_setting_configtextarea('periods', get_string('config_periods', 'block_mrbs'),get_string('config_periods2', 'block_mrbs'),''));
-        $settings->settings->periods->plugin='block/mrbs';
-    }
+    $settings->add(new admin_setting_configtextarea('periods', get_string('config_periods', 'block_mrbs'),get_string('config_periods2', 'block_mrbs'),''));
+    $settings->settings->periods->plugin='block/mrbs';
 }
 
 // Date Information
@@ -175,34 +172,34 @@ $settings->add(new admin_setting_configtext('', get_string('config_', 'block_mrb
 $settings->settings->->plugin='block/mrbs';
 */
 
-$settings->add(new admin_setting_configtext('entry_type_a', get_string('config_entry_type', 'block_mrbs','A'), get_string('config_entry_type2', 'block_mrbs','A'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_a', get_string('config_entry_type', 'block_mrbs','A'), get_string('config_entry_type2', 'block_mrbs','A'), '', PARAM_TEXT));
 $settings->settings->entry_type_a->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_b', get_string('config_entry_type', 'block_mrbs','B'), get_string('config_entry_type2', 'block_mrbs','B'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_b', get_string('config_entry_type', 'block_mrbs','B'), get_string('config_entry_type2', 'block_mrbs','B'), '', PARAM_TEXT));
 $settings->settings->entry_type_b->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_c', get_string('config_entry_type', 'block_mrbs','C'), get_string('config_entry_type2', 'block_mrbs','C'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_c', get_string('config_entry_type', 'block_mrbs','C'), get_string('config_entry_type2', 'block_mrbs','C'), '', PARAM_TEXT));
 $settings->settings->entry_type_c->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_d', get_string('config_entry_type', 'block_mrbs','D'), get_string('config_entry_type2', 'block_mrbs','D'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_d', get_string('config_entry_type', 'block_mrbs','D'), get_string('config_entry_type2', 'block_mrbs','D'), '', PARAM_TEXT));
 $settings->settings->entry_type_d->plugin='block/mrbs';
 
 $settings->add(new admin_setting_configtext('entry_type_e', get_string('config_entry_type', 'block_mrbs','E'), get_string('config_entry_type2', 'block_mrbs','E'), get_string('external','block_mrbs'), PARAM_TEXT));
 $settings->settings->entry_type_e->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_f', get_string('config_entry_type', 'block_mrbs','F'), get_string('config_entry_type2', 'block_mrbs','F'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_f', get_string('config_entry_type', 'block_mrbs','F'), get_string('config_entry_type2', 'block_mrbs','F'), '', PARAM_TEXT));
 $settings->settings->entry_type_f->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_g', get_string('config_entry_type', 'block_mrbs','G'), get_string('config_entry_type2', 'block_mrbs','G'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_g', get_string('config_entry_type', 'block_mrbs','G'), get_string('config_entry_type2', 'block_mrbs','G'), '', PARAM_TEXT));
 $settings->settings->entry_type_g->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_h', get_string('config_entry_type', 'block_mrbs','H'), get_string('config_entry_type2', 'block_mrbs','H'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_h', get_string('config_entry_type', 'block_mrbs','H'), get_string('config_entry_type2', 'block_mrbs','H'), '', PARAM_TEXT));
 $settings->settings->entry_type_h->plugin='block/mrbs';
 
 $settings->add(new admin_setting_configtext('entry_type_i', get_string('config_entry_type', 'block_mrbs','I'), get_string('config_entry_type2', 'block_mrbs','I'), get_string('internal','block_mrbs'), PARAM_TEXT));
 $settings->settings->entry_type_i->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('entry_type_j', get_string('config_entry_type', 'block_mrbs','J'), get_string('config_entry_type2', 'block_mrbs','J'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('entry_type_j', get_string('config_entry_type', 'block_mrbs','J'), get_string('config_entry_type2', 'block_mrbs','J'), '', PARAM_TEXT));
 $settings->settings->entry_type_j->plugin='block/mrbs';
 
 $options = array('0' => get_string('no'), '1' => get_string('yes'));
@@ -239,8 +236,8 @@ $settings->settings->mail_from->plugin='block/mrbs';
 $settings->add(new admin_setting_configtext('mail_recipients', get_string('config_mail_recipients', 'block_mrbs'),get_string('config_mail_recipients2', 'block_mrbs'), $CFG->supportemail, PARAM_TEXT));
 $settings->settings->mail_recipients->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('mail_cc', get_string('config_mail_cc', 'block_mrbs'),get_string('config_mail_cc2', 'block_mrbs'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('mail_cc', get_string('config_mail_cc', 'block_mrbs'),get_string('config_mail_cc2', 'block_mrbs'), '', PARAM_TEXT));
 $settings->settings->mail_cc->plugin='block/mrbs';
 
-$settings->add(new admin_setting_configtext('cronfile', get_string('cronfile', 'block_mrbs'),get_string('cronfiledesc', 'block_mrbs'), NULL, PARAM_TEXT));
+$settings->add(new admin_setting_configtext('cronfile', get_string('cronfile', 'block_mrbs'),get_string('cronfiledesc', 'block_mrbs'), '', PARAM_TEXT));
 $settings->settings->cronfile->plugin='block/mrbs';
